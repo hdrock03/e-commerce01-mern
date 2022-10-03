@@ -116,7 +116,15 @@
 }
 .product-list ul li {
   display: inline-block;
-  border: 1px solid rgb(45, 154, 130) ;
-  padding: 5px;
+  border: 1px solid rgb(45, 154, 130);
+  padding: 10px;
   width: 150px;
+  height: 30px;
+}
+
+.search-product-box{
+  width: 600px;
+  margin: 20px;
+  padding: 15px;
+  border: 1px solid rgb(45, 154, 130) ;
 }

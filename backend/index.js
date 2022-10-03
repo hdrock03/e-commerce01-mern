@@ -48,10 +48,39 @@ app.get('/products', async (req,res) => {
   }
 })
 
-app.delete("/product/:id", async (req, resp) => {
+app.delete("/product/:id", async (req, res) => {
   // console.log(req.params.id);
-  let result = await Product.findByIdAndRemove(req.params.id);
-  resp.send(result)
+  let result = await Product.findByIdAndRemove(req.params.id);// yaha pe deleteOne kaam nh krega 
+  res.send(result)
+})
+
+app.get("/product/:id", async(req,res) =>{
+  // console.log(req.params.id)
+  let result = await Product.findById(req.params.id)
+  if(result) {
+    res.send(result)
+  }else{
+    res.send({result: "No record found"})
+  }
+})
+
+app.put('/product/:id', async (req,res) => {
+  let result = await Product.updateOne( // iske 2 paramter hnge 1st jis product ka change krana h to id le liye and 2nd $set se body me update kr rhe h
+    {_id: req.params.id},
+    { $set: req.body}
+  )
+  res.send(result)
+})
+
+app.get('/search/:key', async(req,res) => { // yaha key use kiye h qki bht sare field me check krna h jaise name,company,category etc
+  let result = await Product.find({
+    "$or" : [                              // $or use kiye h qki ek se jyada field me check krna h
+      { name: {$regex:req.params.key} },    // // yhi standard procedure h check krne ka
+      { company: {$regex: req.params.key} }, 
+      { category: {$regex: req.params.key} }     
+    ]
+  })
+  res.send(result)
 })
 
 
